@@ -1,0 +1,61 @@
+<section class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="well sidebar-nav">
+                    <ul class="nav">
+                        <li class="nav-header">
+                            <a href="javascript:void(0);" ng-click="productsWithCategory()">All Categories</a>
+                        </li>
+                        <li ng-repeat="category in categories">
+                            <a href="javascript:void(0);" ng-click="productsWithCategory(category.id)">{{category.id}} - {{category.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <!-- Search bar -->
+                 <form role="search" class="col-md-5">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search" ng-model="query">
+                    </div>
+                </form>
+                <div>
+                    <table class="table">
+                        <tr ng-repeat="product in filteredProducts = (products | filter: query) | startFrom: startPage() | limitTo:pageSize">
+                       <!--  <tr ng-repeat="product in products | filter: query | startFrom: startPage() | limitTo: pageSize"> -->
+                            <td>
+                                <div class="col-md-4 pull-left">
+                                    <a href="#/product/{{product.id}}">
+                                        <img ng-src="{{product.imageUrl}}"/>
+                                    </a>
+                                </div>
+                                <div class="col-md-5">
+                                    <h3>{{product.name}}</h3>
+                                    {{product.description}}
+                                    <h4>{{product.price}}</h4>
+                                    <em>{{product.categoryId}}</em>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <div ng-show="!filteredProducts.length">No products found :(</div>
+                    <div ng-hide="pages().length <= 1 || !filteredProducts.length">
+                        <ul class="pagination pagination-lg pagination-centered">
+                            <li><a href="javascript:void(0);" ng-click="moveBack()">&laquo;</a></li>
+                            <li ng-repeat="i in pages()">
+                                <a href="javascript:void(0);" ng-click="switchPage(i)">{{i}}</a>
+                            </li>
+                            <li><a href="javascript:void(0);" ng-click="moveForward()">&raquo;</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Progress bar when loading products -->
+              <!-- <div class="progress progress-striped active" ng-show="!products.length">
+                  <div class="progress-bar"  role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                    <span class="sr-only">100% Complete</span>
+                  </div>
+                </div> -->
+            </div>
+        </div>
+    </section>
