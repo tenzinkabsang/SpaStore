@@ -8,17 +8,19 @@ namespace SpaStore.Data
 {
     public class CategoryRepository:SqlRepository<Category>, ICategoryRepository
     {
-        public CategoryRepository(DbContext context)
-            : base(context)
+        public CategoryRepository(DbContext dbContext)
+            : base(dbContext)
         {
         }
 
-        public IList<string> GetCategoryNames()
+        public IQueryable<CategoryBrief> GetCategoryBriefs()
         {
-            return DbSet.Select(c => c.Name)
-                        .Distinct()
-                        .OrderBy(c => c)
-                        .ToList();
+            return DbSet.Select(c => new CategoryBrief
+                                         {
+                                             Id = c.Id,
+                                             Name = c.Name
+                                         })
+                        .Distinct();
         }
     }
 }

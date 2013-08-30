@@ -17,17 +17,17 @@ angular.module('myStore.controllers', []).
 
     }]).
     
-    controller('ProductsCtrl', ['$scope', 'Categories', 'Products', function($scope, Categories, Products) {
-        $scope.categories = Categories.query();
+    controller('ProductsCtrl', ['$scope', 'CategoryBriefs', 'ProductBriefs', 'Products', function ($scope, CategoryBriefs, ProductBriefs, Products) {
+        $scope.categories = CategoryBriefs.query();
 
         // use this as cache to hold all products
-        $scope.allProducts = Products.query();
+        $scope.allProducts = ProductBriefs.query();
 
         // initially show all products without any category filters
         $scope.products = $scope.allProducts;
 
         // filter products by selected category
-        $scope.productsWithCategory = function(categoryId) {
+        $scope.productsWithCategory = function (categoryId) {
             if (categoryId) {
                 $scope.products = _.where($scope.allProducts, { categoryId: categoryId });
             } else {

@@ -13,13 +13,13 @@ namespace SpaStore.Data
     public class SqlRepository<T> : IRepository<T>
         where T : class
     {
-        private readonly DbContext _context;
+        protected DbContext DbContext;
         protected DbSet<T> DbSet { get; set; }
 
-        public SqlRepository(DbContext context)
+        public SqlRepository(DbContext dbContext)
         {
-            _context = context;
-            DbSet = _context.Set<T>();
+            DbContext = dbContext;
+            DbSet = DbContext.Set<T>();
         }
 
         public virtual IQueryable<T> GetAll()
@@ -34,7 +34,7 @@ namespace SpaStore.Data
 
         public virtual void Add(T entity)
         {
-            DbEntityEntry dbEntityEntry = _context.Entry(entity);
+            DbEntityEntry dbEntityEntry = DbContext.Entry(entity);
             if (dbEntityEntry.State != EntityState.Detached)
                 dbEntityEntry.State = EntityState.Added;
             else
@@ -43,7 +43,7 @@ namespace SpaStore.Data
 
         public virtual void Update(T entity)
         {
-            DbEntityEntry dbEntityEntry = _context.Entry(entity);
+            DbEntityEntry dbEntityEntry = DbContext.Entry(entity);
             if (dbEntityEntry.State == EntityState.Deleted)
                 DbSet.Attach(entity);
 
@@ -52,7 +52,7 @@ namespace SpaStore.Data
 
         public virtual void Delete(T entity)
         {
-            DbEntityEntry dbEntityEntry = _context.Entry(entity);
+            DbEntityEntry dbEntityEntry = DbContext.Entry(entity);
             if (dbEntityEntry.State != EntityState.Deleted)
                 dbEntityEntry.State = EntityState.Deleted;
             else

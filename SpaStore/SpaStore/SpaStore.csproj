@@ -175,7 +175,11 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\ApiControllerBase.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\CategoryBriefsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductBriefsController.cs" />
+    <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Filters\ValidationActionFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -189,8 +193,6 @@
     <Content Include="angular\app\js\filters.js" />
     <Content Include="angular\app\js\services.js" />
     <Content Include="angular\app\partials\home.html" />
-    <Content Include="angular\app\partials\partial1.html" />
-    <Content Include="angular\app\partials\partial2.html" />
     <Content Include="angular\app\partials\store.html" />
     <Content Include="angular\config\karma-e2e.conf.js" />
     <Content Include="angular\config\karma.conf.js" />

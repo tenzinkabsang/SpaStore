@@ -6,20 +6,12 @@ using SpaStore.Model;
 
 namespace SpaStore.Data
 {
-    public class ProductRepository :SqlRepository<Product>, IProductRepository
+    public class ProductRepository : SqlRepository<Product>, IProductRepository
     {
-        public ProductRepository(DbContext context)
-            : base(context)
+        public ProductRepository(DbContext dbContext)
+            : base(dbContext)
         {
 
-        }
-
-        public IList<Product> GetProductsForCategoryName(string categoryName)
-        {
-            return base.DbSet.Include(c => c.Category)
-                             .Include(c => c.Images)
-                             .Where(p => categoryName == null || p.Category.Name == categoryName)
-                             .ToList();
         }
 
         public IList<Product> GetByCategoryId(int id)
@@ -30,10 +22,39 @@ namespace SpaStore.Data
                 .ToList();
         }
 
-        public override IQueryable<Product> GetAll()
+        public IQueryable<ProductBrief> GetProductBriefs()
         {
-            return DbSet.Include(c => c.Category)
-                        .Include(c => c.Images);
+            return DbSet.Select(p => new ProductBrief
+                                         {
+                                             Id = p.Id,
+                                             CategoryId = p.CategoryId,
+                                             Name = p.Name,
+                                             Description = p.Description,
+                                             Price = p.Price,
+                                             PrimaryUrl = p.Images.Where(i => i.IsPrimary).Select(i => i.Url).FirstOrDefault()
+                                         });
+        }
+
+        public IQueryable<ProductDto> GetProductDtos()
+        {
+            return DbSet
+                        .Include(p => p.Images)
+                        .Select(p => new ProductDto
+                                         {
+                                             Id = p.Id,
+                                             CategoryId = p.CategoryId,
+                                             Name = p.Name,
+                                             Description = p.Description,
+                                             Price = p.Price,
+                                             Images = p.Images.Select(i => new ImageDto
+                                                                               {
+                                                                                   Id = i.Id,
+                                                                                   Name = i.Name,
+                                                                                   Url = i.Url,
+                                                                                   IsPrimary = i.IsPrimary,
+                                                                                   ProductId = i.ProductId
+                                                                               })
+                                         });
         }
     }
 }
