@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using SpaStore.Contracts;
+using SpaStore.Mapper;
 using SpaStore.Model;
 
 namespace SpaStore.Controllers
@@ -19,27 +20,30 @@ namespace SpaStore.Controllers
         // GET: /api/products
         public IEnumerable<ProductDto> Get()
         {
-            var products = Uow.Products.GetProductDtos()
-                      .OrderBy(p => p.Id).ToList();
+            var products = Uow.Products.GetAll()
+                              .OrderBy(p => p.Id)
+                              .ToDtos();
 
             return products;
         }
 
         // GET: /api/products/5
-        public Product Get(int id)
+        public ProductDto Get(int id)
         {
-            var product = Uow.Products.GetById(id);
+            var product = Uow.Products.GetByIdFull(id);
             if (product != null)
-                return product;
+                return product.ToDto();
             throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.NotFound));
         }
 
         // GET: /api/products/getByCategoryId/4
-        public IEnumerable<Product> GetByCategoryId(int id)
-        {
-            return Uow.Products.GetAll()
-                      .Where(p => p.CategoryId == id);
-        }
+        //[ActionName("getByCategoryId")]
+        //public IEnumerable<ProductDto> GetByCategoryId(int id)
+        //{
+        //    return Uow.Products.GetAll()
+        //              .Where(p => p.CategoryId == id)
+        //              .ToDtos();
+        //}
 
         // Update an existing Product
         // PUT: /api/products

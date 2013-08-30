@@ -1,0 +1,23 @@
+﻿<section class="container">
+    <div class="row" style="margin-top: 50px;">
+        <div class="col-lg-4">
+            <img ng-src="{{product.primaryUrl}}" />
+        </div>
+        <div class="col-lg-3">
+            <h3>{{product.name}}</h3>
+            <p>
+                {{product.description}}
+            </p>
+            <p>
+                <span class="text-muted">Price: </span>{{product.price | currency}}
+            </p>
+            <p>
+                <select ng-model="quantity" ng-options="i for i in quantityOptions" class="form-control">
+                </select>
+            </p>
+            <p>
+                <a href="#/products">Continue shopping</a>
+            </p>
+        </div> 
+    </div>
+</section>
