@@ -2,15 +2,16 @@
         <div class="row">
             <div class="col-lg-3">
                 <div class="well sidebar-nav">
-                    <ul class="nav">
-                        <li class="nav-header">
-                            <a href="javascript:void(0);" ng-click="productsWithCategory()">All Categories</a>
-                        </li>
-                        <li ng-repeat="category in categories">
-                            <a href="javascript:void(0);" ng-click="productsWithCategory(category.id)">{{category.id}} - {{category.name}}</a>
-                        </li>
-                    </ul>
-                </div>
+                        <ul class="nav">
+                            <li class="nav-header">
+                                <a href="javascript:void(0);" ng-click="productsWithCategory()">All Categories</a>
+                            </li>
+                            <li ng-repeat="category in categories">
+                                <a href="javascript:void(0);" ng-click="productsWithCategory(category.id)">{{category.id}} - {{category.name}}</a>
+                            </li>
+                        </ul>
+                    </div>
+              <!--  <div ng-include="angular/app/partials/categories.html"></div>-->
             </div>
             <div class="col-lg-9">
                 <!-- Search bar -->
@@ -26,14 +27,17 @@
                             <td>
                                 <div class="col-md-4 pull-left">
                                     <a href="#/product/{{product.id}}">
-                                        <img ng-src="{{product.imageUrl}}"/>
+                                        <img ng-src="{{product.primaryUrl}}"/>
                                     </a>
                                 </div>
                                 <div class="col-md-5">
-                                    <h3>{{product.name}}</h3>
+                                    <h3>
+                                        <a href="#/product/{{product.id}}">{{product.name}}</a>
+                                    </h3>
                                     {{product.description}}
                                     <h4>{{product.price}}</h4>
-                                    <em>{{product.categoryId}}</em>
+                                    <em>ProductId: {{product.id}}</em><br/>
+                                    <em>CategoryId: {{product.categoryId}}</em>
                                 </div>
                             </td>
                         </tr>

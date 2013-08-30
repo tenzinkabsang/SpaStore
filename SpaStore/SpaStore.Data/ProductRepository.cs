@@ -35,26 +35,18 @@ namespace SpaStore.Data
                                          });
         }
 
-        public IQueryable<ProductDto> GetProductDtos()
+        public Product GetByIdFull(int id)
         {
-            return DbSet
+            return DbSet.Include(p => p.Category)
                         .Include(p => p.Images)
-                        .Select(p => new ProductDto
-                                         {
-                                             Id = p.Id,
-                                             CategoryId = p.CategoryId,
-                                             Name = p.Name,
-                                             Description = p.Description,
-                                             Price = p.Price,
-                                             Images = p.Images.Select(i => new ImageDto
-                                                                               {
-                                                                                   Id = i.Id,
-                                                                                   Name = i.Name,
-                                                                                   Url = i.Url,
-                                                                                   IsPrimary = i.IsPrimary,
-                                                                                   ProductId = i.ProductId
-                                                                               })
-                                         });
+                        .FirstOrDefault(p => p.Id == id);
+        }
+
+        public override IQueryable<Product> GetAll()
+        {
+            return base.GetAll()
+                       .Include(p => p.Category)
+                       .Include(p => p.Images);
         }
     }
 }

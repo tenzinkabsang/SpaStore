@@ -16,7 +16,6 @@ angular.module('myStore.controllers', []).
     controller('HomeCtrl', ['$scope', function ($scope) {
 
     }]).
-    
     controller('ProductsCtrl', ['$scope', 'CategoryBriefs', 'ProductBriefs', 'Products', function ($scope, CategoryBriefs, ProductBriefs, Products) {
         $scope.categories = CategoryBriefs.query();
 
@@ -71,6 +70,9 @@ angular.module('myStore.controllers', []).
 
     }]).
     
-    controller('ProductDetailCtrl', ['$scope', 'Products', function($scope, Products) {
+    controller('ProductDetailCtrl', ['$scope', '$routeParams', 'Products', function($scope, $routeParams, Products) {
 
+        $scope.product = Products.get({ id: $routeParams.id });
+        $scope.quantityOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+        $scope.quantity = 1;
     }]);

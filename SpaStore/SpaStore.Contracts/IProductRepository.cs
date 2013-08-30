@@ -10,6 +10,6 @@ namespace SpaStore.Contracts
 
         IQueryable<ProductBrief> GetProductBriefs();
 
-        IQueryable<ProductDto> GetProductDtos();
+        Product GetByIdFull(int id);
     }
 }

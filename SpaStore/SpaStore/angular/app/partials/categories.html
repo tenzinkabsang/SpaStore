@@ -1,0 +1,10 @@
+﻿<div class="well sidebar-nav">
+    <ul class="nav">
+        <li class="nav-header">
+            <a href="javascript:void(0);" ng-click="productsWithCategory()">All Categories</a>
+        </li>
+        <li ng-repeat="category in categories">
+            <a href="javascript:void(0);" ng-click="productsWithCategory(category.id)">{{category.id}} - {{category.name}}</a>
+        </li>
+    </ul>
+</div>
